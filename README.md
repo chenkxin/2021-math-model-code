@@ -3,3 +3,8 @@
 - 用dev分支开发
 - data文件夹里放原始数据
 - 不必要的中间文件建议忽略掉
+
+## Install 
+```bash
+pip install -r requirements.txt
+```

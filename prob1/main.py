@@ -1,6 +1,12 @@
 import pandas as pd
 
-file_path = "./1.clean.csv"
+# 中位数填充
+# file_path = "./1.clean.csv"
+# output_path = "1.clean.csv"
+
+# drop, 直接删除无效值所在行
+file_path = "./1.clean-drop-nans.csv"
+output_path = "1.AQI.drop-nans.csv"
 data = pd.read_csv(file_path)
 
 # print("获取到所有的值:\n{0}".format(data))
@@ -62,4 +68,4 @@ for index, row in data.iterrows():
     print(BPLo, BPHi, Cp, IAQIHi, IAQILo, IAQIp, AQI)
     data.iloc[index, 12] = AQI
 
-data.to_csv('1.AQI.csv', sep=',', index=False)
+data.to_csv(output_path, sep=',', index=False)

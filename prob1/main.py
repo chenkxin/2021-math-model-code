@@ -54,7 +54,7 @@ def compute_qualities(pollution_list):
             BPHi = min_
             x = j  # x 是 BPHi 对应 IAQIHo 的位置
 
-        IAQIHi = dict[6][x+1]
+        IAQIHi = dict[6][x + 1]
         IAQILo = dict[6][x]
         result.append([BPLo, BPHi, Cp, IAQIHi, IAQILo])
     return result
@@ -81,57 +81,6 @@ def compute_iaqi(quality):
     IAQIp = (IAQIHi - IAQILo) / (BPHi - BPLo) * (Cp - BPLo) + IAQILo
     return round(IAQIp)
 
-def aqi_v1():
-    for index, row in data.iterrows():
-        for i in range(6):
-            # print(i)
-            len = 8  # 表格长度
-            if i == 4:  # if now is O3, len is 6
-                len = 6
-            IAQIp = 0
-            BPLo = 0
-            BPHi = 0
-            IAQIHi = 0
-            IAQILo = 0
-            x = 0  # x 是 BPHi 对应 IAQIHo 的位置
-            Cp = row[KEYS[i]]
-            # 与相近的污染物浓度限值的高位值与低位值
-            j = 0
-            min = dict[i][j]
-            while Cp > min and j + 1 < len:
-                j = j + 1
-                min = dict[i][j]
-
-            if Cp > min:  # 污染物浓度过高， 不再计算
-                IAQIp = 0
-                continue
-
-            if Cp == min:  # 相等的情况， j 往后取一位
-                BPLo = min
-                BPHi = dict[i][j + 1]
-                x = j  # x 是 BPHi 对应 IAQIHo 的位置
-            else:
-                if j - 1 >= 0:  # j 向前取， 需要小心数组越界
-                    j = j - 1
-                BPLo = dict[i][j]
-                BPHi = min
-                x = j  # x 是 BPHi 对应 IAQIHo 的位置
-
-            IAQIHi = dict[6][x]
-            IAQILo = dict[6][x + 1]
-
-            IAQIp = (IAQIHi - IAQILo) / (BPHi - BPLo) * (Cp - BPLo) + IAQILo
-            data.iloc[index, i + 6] = round(IAQIp)
-            # print(IAQIp)
-
-        AQI = max(data.iloc[index, 6], data.iloc[index, 7], data.iloc[index, 8], data.iloc[index, 9],
-                  data.iloc[index, 10],
-                  data.iloc[index, 11])
-        print(BPLo, BPHi, Cp, IAQIHi, IAQILo, IAQIp, AQI)
-        data.iloc[index, 12] = AQI
-
-    data.to_csv(output_path, sep=',', index=False)
-
 
 if __name__ == '__main__':
     so2 = 12
@@ -140,7 +89,6 @@ if __name__ == '__main__':
     pm25 = 39
     o3 = 210
     co = 0.8
-
 
     # BPLo, BPHi, Cp, IAQIHi, IAQILo
     quality = compute_qualities([so2, no2, pm10, pm25, o3, co])

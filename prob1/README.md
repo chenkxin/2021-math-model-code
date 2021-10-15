@@ -6,7 +6,7 @@ pip install datacleaner
 [datacleaner](https://github.com/rhiever/datacleaner)
 
 ```bash
-datacleaner 1.csv -o 1.clean-drop-nans.csv -is , -os ,
+datacleaner 1.csv -o 1.clean.csv -is , -os ,
 ```
 得到 1.clean.csv, 中位数填充
 ```bash

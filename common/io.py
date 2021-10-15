@@ -18,7 +18,7 @@ data/附件3 监测点A1、A2、A3空气质量预报基础数据.xlsx""".split("
     return tables, keys
 
 def load_table(name):
-    return pd.read_excel(name, engine='openpyxl', sheet_name=None)
+    return pd.read_excel("data/"+name+".xlsx", engine='openpyxl', sheet_name=None)
 
 
 def _process_to_json(tables):

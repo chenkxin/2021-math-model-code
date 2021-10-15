@@ -3,3 +3,5 @@ numpy
 pandas
 openpyxl
 datacleaner
+xlsxwriter
+

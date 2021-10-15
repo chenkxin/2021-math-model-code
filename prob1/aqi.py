@@ -1,16 +1,5 @@
 import pandas as pd
 
-# 中位数填充
-# file_path = "./1.clean.csv"
-# output_path = "1.clean.csv"
-
-# drop, 直接删除无效值所在行
-file_path = "./1.clean-drop-nans.csv"
-output_path = "1.AQI.drop-nans.csv"
-data = pd.read_csv(file_path)
-
-# print("获取到所有的值:\n{0}".format(data))
-
 KEYS = ["SO2监测浓度(μg/m³)", "NO2监测浓度(μg/m³)", "PM10监测浓度(μg/m³)", "PM2.5监测浓度(μg/m³)", "O3最大八小时滑动平均监测浓度(μg/m³)",
         "CO监测浓度(mg/m³)"]
 dict = [
@@ -71,13 +60,15 @@ def compute_aqi(so2, no2, pm10, pm25, o3, co):
             result.append(compute_iaqi(q))
         else:
             result.append(0)
-    print(result)
     return max(result)
 
 
 def compute_iaqi(quality):
     # BPLo, BPHi, Cp, IAQIHi, IAQILo
     BPLo, BPHi, Cp, IAQIHi, IAQILo = quality
+    if BPHi - BPLo == 0:
+        print("warning: divided by zero")
+        return 0
     IAQIp = (IAQIHi - IAQILo) / (BPHi - BPLo) * (Cp - BPLo) + IAQILo
     return round(IAQIp)
 

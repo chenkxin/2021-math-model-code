@@ -7,6 +7,10 @@ def create_new_table_for_place(p):
     for i in range(3):
         df = data[p][i]
 
+        # 负值处理
+        num = df._get_numeric_data()
+        num[num<0] = np.nan
+
         if args.fillna == "mean":
             # 空值用中位数填充
             df.fillna(df.median())

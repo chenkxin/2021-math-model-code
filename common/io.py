@@ -1,5 +1,13 @@
+"""
+Author: QiangZiBro
+Contact: Github/QiangZiBro
+Time: 2021/10/15
+"""
 import pandas as pd
 import matplotlib.pyplot as plt
+import time
+from threading import Thread
+
 plt.style.use('ggplot')
 plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
 
@@ -8,13 +16,25 @@ FORMAT = "svg"
 PLACES = ['A', 'B', 'C', 'A1', 'A2', 'A3']
 TYPES = [0, 1, 2]
 
-
 def _load_data():
+    print("Use 3 threads to read table...")
+    tables = [None]*3
+    def _read_table(f, pos):
+        tables[pos] = pd.read_excel(f, engine='openpyxl', sheet_name=None)
+
     table_files = """data/附件1 监测点A空气质量预报基础数据.xlsx
 data/附件2 监测点B、C空气质量预报基础数据.xlsx
 data/附件3 监测点A1、A2、A3空气质量预报基础数据.xlsx""".split("\n")
-    tables = [pd.read_excel(i, engine='openpyxl', sheet_name=None) for i in table_files]  # 表格全读取
+    threads = []
+    t1 = time.time()
+    for i,e in enumerate(table_files):
+        threads.append(Thread(target=_read_table, args=(e,i)))
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
     keys = [list(i.keys()) for i in tables]  # 每个表格的sheet list
+    print("Done, cost {}s".format(time.time() - t1))
     return tables, keys
 
 def load_table(name):

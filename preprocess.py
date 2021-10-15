@@ -1,5 +1,6 @@
 from threading import Thread
 from common.io import *
+import time
 import numpy as np
 
 
@@ -28,6 +29,7 @@ def create_new_table_for_place(p):
 
 
 if __name__ == '__main__':
+    t1 = time.time()
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--fillna",
@@ -46,4 +48,4 @@ if __name__ == '__main__':
         t.start()
     for t in threads:
         t.join()
-    print("Done")
+    print("Done, {}s in your life bye bye".format(time.time() - t1))

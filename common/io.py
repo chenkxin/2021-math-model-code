@@ -17,6 +17,9 @@ data/附件3 监测点A1、A2、A3空气质量预报基础数据.xlsx""".split("
     keys = [list(i.keys()) for i in tables]  # 每个表格的sheet list
     return tables, keys
 
+def load_table(name):
+    return pd.read_excel(name, engine='openpyxl', sheet_name=None)
+
 
 def _process_to_json(tables):
     sheetnames = {0: '监测点{}逐小时污染物浓度与气象一次预报数据', 1: '监测点{}逐小时污染物浓度与气象实测数据', 2: '监测点{}逐日污染物浓度实测数据'}

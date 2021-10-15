@@ -11,18 +11,18 @@ def create_new_table_for_place(p):
         # 数值化
         index = list(df.columns).index('地点')+1
         df1 = df[df.columns[index:]]
-        # 异常值处理
+        # 异常值处理(含有“——”的项)
         df1 = df1.apply(pd.to_numeric, errors='coerce')
         # 负值处理
-        num = df1._get_numeric_data()
-        num[num < 0] = np.nan
+        df1 = df1._get_numeric_data()
+        df1[df1 < 0] = np.nan
 
         if args.fillna == "mean":
             # 空值用中位数填充
-            df1 = df1.fillna(df1.median())
+            df1 = df1.fillna(df1.median(numeric_only=True))
         elif args.fillna == "mean":
             # 空值用均值填充
-            df1 = df1.fillna(df1.mean())
+            df1 = df1.fillna(df1.mean(numeric_only=True))
         df[df.columns[index:]] = df1
         df.to_excel(writer, sheet_name=str(i))
     writer.save()

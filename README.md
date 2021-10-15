@@ -12,5 +12,5 @@ pip install -r requirements.txt
 
 预处理
 ```bash
-python preprocess.py
+python preprocess.py --fillna mean/median
 ```

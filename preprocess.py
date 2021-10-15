@@ -19,7 +19,7 @@ def create_new_table_for_place(p):
             # 空值用均值填充
             df = df.fillna(df.mean())
 
-        data[p][i].to_excel(writer, sheet_name=str(i))
+        data[p][i].to_excel(writer, sheet_name=i)
     writer.save()
 
 

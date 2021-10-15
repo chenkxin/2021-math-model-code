@@ -9,7 +9,7 @@ def create_new_table_for_place(p):
         df = data[p][i]
         # 数值化
         index = list(df.columns).index('地点')+1
-        df1 = df[df.columns[index+1:]]
+        df1 = df[df.columns[index:]]
         # 异常值处理
         df1 = df1.apply(pd.to_numeric, errors='coerce')
         # 负值处理
@@ -22,7 +22,7 @@ def create_new_table_for_place(p):
         elif args.fillna == "mean":
             # 空值用均值填充
             df1 = df1.fillna(df1.mean())
-        df[df.columns[index+1:]] = df1
+        df[df.columns[index:]] = df1
         df.to_excel(writer, sheet_name=str(i))
     writer.save()
 

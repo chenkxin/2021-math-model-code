@@ -1,24 +1,10 @@
-# data analysis and wrangling
 import pandas as pd
-
-# visualization
-import seaborn as sns
 import matplotlib.pyplot as plt
-
 plt.style.use('ggplot')
-# MacOS上画图中文乱码的问题
-# https://blog.csdn.net/minixuezhen/article/details/81516949?utm_medium=distribute.pc_relevant.none-task-blog-
 plt.rcParams['font.sans-serif'] = ['Arial Unicode MS']
-
-
-import os
-
-if not os.path.exists("results"):
-    os.mkdir("results")
 
 FIGSIZE = (30, 25)
 FORMAT = "svg"
-
 PLACES = ['A', 'B', 'C', 'A1', 'A2', 'A3']
 TYPES = [0, 1, 2]
 
@@ -70,4 +56,3 @@ def load():
 
 if __name__ == '__main__':
     data = load()
-    pass

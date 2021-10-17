@@ -4,6 +4,12 @@ pandas
 openpyxl
 datacleaner
 xlsxwriter
-
 pandas-profiling
 sklearn
+plotly
+statsmodels
+jupyterlab
+matplotlib
+seaborn
+tqdm
+pygam

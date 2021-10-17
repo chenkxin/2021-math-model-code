@@ -49,17 +49,22 @@ def compute_qualities(pollution_list):
     return result
 
 
-def compute_aqi(so2, no2, pm10, pm25, o3, co):
+def compute_aqi(so2, no2, pm10, pm25, o3, co, main_factor=False):
     """
     :return: AQI
     """
     result = []
+    
     qualities = compute_qualities([so2, no2, pm10, pm25, o3, co])
     for q in qualities:
         if q:
             result.append(compute_iaqi(q))
         else:
             result.append(0)
+    if main_factor:
+        pls = ["SO2", "NO2", "PM10", "PM2.5", "O3", "CO"]
+        idx = result.index(max(result))
+        return max(result), pls[idx]
     return max(result)
 
 

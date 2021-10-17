@@ -6,6 +6,7 @@ Time: 2021/10/15
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
+import concurrent
 from threading import Thread
 
 plt.style.use('ggplot')
@@ -15,6 +16,25 @@ FIGSIZE = (30, 25)
 FORMAT = "svg"
 PLACES = ['A', 'B', 'C', 'A1', 'A2', 'A3']
 TYPES = [0, 1, 2]
+
+def cal_time(func):
+    def inner(args):
+        start = time.time()
+        result = func(args)
+        end = time.time()
+        print(f"{end-start}s passed")
+        return result
+    return inner
+
+
+
+@cal_time
+def load_tables(places=PLACES):
+    df = {i:None for i in places}
+    with concurrent.futures.ProcessPoolExecutor(max_workers=len(places)) as executor:
+        for p, result in zip(places, executor.map(load_table, places)):
+            df[p] = result
+    return df
 
 def _load_data():
     print("Use 3 threads to read table...")
